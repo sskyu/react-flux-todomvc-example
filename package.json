@@ -1,0 +1,35 @@
+{
+  "name": "gulp-webpack-skeleton",
+  "version": "0.0.0",
+  "description": "",
+  "main": "js/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sskyu",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "~5.1.10",
+    "babel-loader": "~5.0.0",
+    "gulp": "~3.8.10",
+    "gulp-autoprefixer": "^2.0.0",
+    "gulp-concat": "^2.4.2",
+    "gulp-if": "~1.2.5",
+    "gulp-minify-css": "^0.3.11",
+    "gulp-plumber": "^0.6.6",
+    "gulp-stylus": "^1.3.4",
+    "gulp-uglify": "~1.0.2",
+    "gulp-watch": "^3.0.0",
+    "gulp-webpack": "~1.1.0",
+    "gulp-webserver": "^0.9.0",
+    "require-dir": "~0.1.0",
+    "source-map-loader": "~0.1.3"
+  },
+  "dependencies": {
+    "babel-runtime": "~5.1.10",
+    "flux": "~2.0.1",
+    "events": "~1.0.2",
+    "keymirror": "~0.1.1",
+    "object-assign": "~2.0.0"
+  }
+}
