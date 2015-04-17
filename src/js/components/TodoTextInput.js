@@ -4,7 +4,7 @@ const PT = React.PropTypes;
 
 const ENTER_KEY_CODE = 13;
 
-export default class TodoTextInput {
+export default class TodoTextInput extends React.Component {
 
   static propTypes = {
     className   : PT.string,
@@ -14,11 +14,9 @@ export default class TodoTextInput {
     value       : PT.string
   }
 
-  constructor() {
-    return {
-      value: this.props.value || ''
-    };
-  }
+  static defaultProps = { value: '' };
+
+  state = { value: this.props.value };
 
   render() {
     return (
@@ -26,9 +24,9 @@ export default class TodoTextInput {
         className={this.props.className}
         id={this.props.id}
         placeholder={this.props.placeholder}
-        onBlur={this.handleBlur}
-        onChange={this.handleChange}
-        onKeyDown={this.handleKeyDown}
+        onBlur={this.handleBlur.bind(this)}
+        onChange={this.handleChange.bind(this)}
+        onKeyDown={this.handleKeyDown.bind(this)}
         value={this.state.value}
         autoFocus={true}
       />

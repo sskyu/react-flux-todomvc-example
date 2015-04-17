@@ -1,7 +1,8 @@
 import React from 'react';
 import TodoStore from '../stores/TodoStore';
 import Header from './Header';
-// import Footer from './Footer';
+import MainSection from './MainSection';
+import Footer from './Footer';
 
 function getTodoState() {
   return {
@@ -10,29 +11,32 @@ function getTodoState() {
   }
 }
 
-export default class TodoApp {
+export default class TodoApp extends React.Component {
 
-  constructor() {
-    return getTodoState();
-  }
+  state = getTodoState();
 
   componentDidMount() {
-    TodoStore.addChangeListener(this._onChange);
+    TodoStore.addChangeListener(this._onChange.bind(this));
   }
 
   componentWillUnmount() {
-    TodoStore.removeChangeListener(this._onChange);
+    TodoStore.removeChangeListener(this._onChange.bind(this));
   }
 
   render() {
     return (
       <div>
         <Header />
+        <MainSection
+          allTodos={this.state.allTodos}
+          areAllComplete={this.state.areAllComplete}
+        />
+        <Footer allTodos={this.state.allTodos} />
       </div>
     );
   }
 
   _onChange() {
-    this.setState(getTodoState())
+    this.setState(getTodoState());
   }
 }

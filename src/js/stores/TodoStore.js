@@ -41,7 +41,7 @@ function destroyCompleted() {
 
 const TodoStore = assign({}, EventEmitter.prototype, {
 
-  areAllComplete: () => {
+  areAllComplete: function () {
     for (let id in _todos) {
       if (!_todos[id].complete) {
         return false;
@@ -50,19 +50,19 @@ const TodoStore = assign({}, EventEmitter.prototype, {
     return true;
   },
 
-  getAll: () => {
+  getAll: function () {
     return _todos;
   },
 
-  emitChange: () => {
+  emitChange: function () {
     this.emit(CHANGE_EVENT);
   },
 
-  addChangeListener: (callback) => {
+  addChangeListener: function (callback) {
     this.on(CHANGE_EVENT, callback);
   },
 
-  removeChangeListener: (callback) => {
+  removeChangeListener: function (callback) {
     this.removeListener(CHANGE_EVENT, callback);
   },
 
@@ -113,7 +113,7 @@ TodoDispatcher.register((action) => {
       TodoStore.emitChange();
       break;
 
-    case todoConstants.DESTROY_COMPLETE:
+    case todoConstants.DESTROY_COMPLETED:
       destroyCompleted();
       TodoStore.emitChange();
       break;

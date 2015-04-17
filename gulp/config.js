@@ -23,12 +23,6 @@ module.exports = {
       extensions: ['', '.js']
     },
     module: {
-      preLoaders: [
-        {
-          test: /\.js$/,
-          loader: 'source-map-loader'
-        }
-      ],
       loaders: [
         {
           test: /\.js$/,
@@ -37,7 +31,8 @@ module.exports = {
           loader: 'babel-loader?stage=0&optional=runtime'
         }
       ]
-    }
+    },
+    devtool: 'eval'
   },
 
   copy: {
