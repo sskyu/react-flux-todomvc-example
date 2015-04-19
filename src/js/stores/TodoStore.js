@@ -1,4 +1,4 @@
-const EventEmitter = require('events').EventEmitter;
+import { EventEmitter } from 'events';
 import assign from 'object-assign';
 import TodoDispatcher from '../dispatcher/TodoDispatcher';
 import todoConstants from '../constants/todo';
@@ -39,87 +39,98 @@ function destroyCompleted() {
   }
 }
 
-const TodoStore = assign({}, EventEmitter.prototype, {
+class TodoStore extends EventEmitter {
 
-  areAllComplete: function () {
+  constructor() {
+    super();
+
+    TodoDispatcher.register(this.handler.bind(this));
+  }
+
+  areAllComplete() {
     for (let id in _todos) {
       if (!_todos[id].complete) {
         return false;
       }
     }
     return true;
-  },
-
-  getAll: function () {
-    return _todos;
-  },
-
-  emitChange: function () {
-    this.emit(CHANGE_EVENT);
-  },
-
-  addChangeListener: function (callback) {
-    this.on(CHANGE_EVENT, callback);
-  },
-
-  removeChangeListener: function (callback) {
-    this.removeListener(CHANGE_EVENT, callback);
-  },
-
-});
-
-// Register callback to handle all updates
-TodoDispatcher.register((action) => {
-  let text;
-
-  switch (action.actionType) {
-    case todoConstants.CREATE:
-      text = action.text.trim();
-      if (text !== '') {
-        create(text);
-        TodoStore.emitChange();
-      }
-      break;
-
-    case todoConstants.UPDATE_TEXT:
-      text = action.text.trim();
-      if (text !== '') {
-        update(action.id, { text: text });
-        TodoStore.emitChange();
-      }
-      break;
-
-    case todoConstants.COMPLETE:
-      update(action.id, { complete: true });
-      TodoStore.emitChange();
-      break;
-
-    case todoConstants.UNDO_COMPLETE:
-      update(action.id, { complete: false });
-      TodoStore.emitChange();
-      break;
-
-    case todoConstants.TOGGLE_COMPLETE_ALL:
-      if (TodoStore.areAllComplete()) {
-        updateAll({ complete: false });
-      } else {
-        updateAll({ complete: true });
-      }
-      TodoStore.emitChange();
-      break;
-
-    case todoConstants.DESTROY:
-      destroy(action.id);
-      TodoStore.emitChange();
-      break;
-
-    case todoConstants.DESTROY_COMPLETED:
-      destroyCompleted();
-      TodoStore.emitChange();
-      break;
-
-    default:
   }
-});
 
-export default TodoStore;
+  getAll() {
+    return _todos;
+  }
+
+  emitChange() {
+    this.emit(CHANGE_EVENT);
+  }
+
+  addChangeListener(callback) {
+    this.on(CHANGE_EVENT, callback);
+  }
+
+  removeChangeListener(callback) {
+    this.removeListener(CHANGE_EVENT, callback);
+  }
+
+  /**
+   * Register callback to handle all updates
+   *
+   * @param  {Object} action
+   */
+  handler(action) {
+    let text;
+
+    switch (action.actionType) {
+      case todoConstants.CREATE:
+        text = action.text.trim();
+        if (text !== '') {
+          create(text);
+          this.emitChange();
+        }
+        break;
+
+      case todoConstants.UPDATE_TEXT:
+        text = action.text.trim();
+        if (text !== '') {
+          update(action.id, { text: text });
+          this.emitChange();
+        }
+        break;
+
+      case todoConstants.COMPLETE:
+        update(action.id, { complete: true });
+        this.emitChange();
+        break;
+
+      case todoConstants.UNDO_COMPLETE:
+        update(action.id, { complete: false });
+        this.emitChange();
+        break;
+
+      case todoConstants.TOGGLE_COMPLETE_ALL:
+        if (this.areAllComplete()) {
+          updateAll({ complete: false });
+        } else {
+          updateAll({ complete: true });
+        }
+        this.emitChange();
+        break;
+
+      case todoConstants.DESTROY:
+        destroy(action.id);
+        this.emitChange();
+        break;
+
+      case todoConstants.DESTROY_COMPLETED:
+        destroyCompleted();
+        this.emitChange();
+        break;
+
+      default:
+    }
+  }
+}
+
+const todoStore = new TodoStore();
+
+export default todoStore;

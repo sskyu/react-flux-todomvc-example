@@ -37,7 +37,7 @@ module.exports = {
 
   copy: {
     src: [
-      src + '/www/index.html'
+      src + '/www/**'
     ],
     dest: dest
   },
