@@ -1,5 +1,6 @@
 import React from 'react';
 import TodoStore from '../stores/TodoStore';
+import todoActions from '../actions/todoActions';
 import Header from './Header';
 import MainSection from './MainSection';
 import Footer from './Footer';
@@ -17,6 +18,8 @@ export default class TodoApp extends React.Component {
 
   componentDidMount() {
     TodoStore.addChangeListener(this._onChange.bind(this));
+
+    todoActions.fetchTodos();
   }
 
   componentWillUnmount() {

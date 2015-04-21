@@ -1,5 +1,5 @@
 import React from 'react';
-import TodoActions from '../actions/todoActions';
+import todoActions from '../actions/todoActions';
 import TodoTextInput from './TodoTextInput';
 
 export default class Header extends React.Component {
@@ -19,7 +19,7 @@ export default class Header extends React.Component {
 
   handleSave(text) {
     if (text.trim()) {
-      TodoActions.create(text);
+      todoActions.create(text);
     }
   }
 }

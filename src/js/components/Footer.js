@@ -1,5 +1,5 @@
 import React from 'react';
-import TodoActions from '../actions/todoActions';
+import todoActions from '../actions/todoActions';
 
 const PT = React.PropTypes;
 
@@ -69,6 +69,6 @@ export default class Footer extends React.Component {
   }
 
   handleClick() {
-    TodoActions.destroyCompleted();
+    todoActions.destroyCompleted();
   }
 }

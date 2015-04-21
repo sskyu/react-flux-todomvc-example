@@ -1,5 +1,6 @@
 import TodoDispatcher from '../dispatcher/TodoDispatcher';
 import todoConstants from '../constants/todo';
+import todoApi from '../utils/todoApi';
 
 export default {
 
@@ -8,6 +9,8 @@ export default {
       actionType: todoConstants.CREATE,
       text: text
     });
+
+    todoApi.saveTodo(text);
   },
 
   updateText: (id, text) => {
@@ -48,4 +51,20 @@ export default {
       actionType: todoConstants.DESTROY_COMPLETED
     });
   },
+
+  fetchTodos: () => {
+    todoApi.fetchTodos((todos) => {
+      TodoDispatcher.dispatch({
+        actionType: todoConstants.FETCH_TODOS,
+        todos: todos
+      });
+    });
+  },
+
+  syncTodos: (todos) => {
+    TodoDispatcher.dispatch({
+      actionType: todoConstants.SYNC_TODOS,
+      todos: todos
+    });
+  }
 }

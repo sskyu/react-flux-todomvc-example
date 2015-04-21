@@ -8,6 +8,8 @@ const todoConstant = keyMirror({
   TOGGLE_COMPLETE_ALL : null,
   DESTROY             : null,
   DESTROY_COMPLETE    : null,
+  FETCH_TODOS         : null,
+  SYNC_TODOS          : null,
 });
 
 export default todoConstant

@@ -8,13 +8,12 @@ const CHANGE_EVENT = 'change';
 let _todos = {};
 
 function create(text) {
-  let id = (Date.now() + (Math.random() * 999999 | 0)).toString(36);
-
-  _todos[id] = {
-    id: id,
-    complete: false,
-    text: text,
-  };
+  // let id = (Date.now() + (Math.random() * 999999 | 0)).toString(36);
+  // _todos[id] = {
+  //   'id': id,
+  //   complete: false,
+  //   text: text,
+  // };
 }
 
 function update(id, updates) {
@@ -123,6 +122,16 @@ class TodoStore extends EventEmitter {
 
       case todoConstants.DESTROY_COMPLETED:
         destroyCompleted();
+        this.emitChange();
+        break;
+
+      case todoConstants.FETCH_TODOS:
+        _todos = action.todos
+        this.emitChange();
+        break;
+
+      case todoConstants.SYNC_TODOS:
+        _todos = action.todos;
         this.emitChange();
         break;
 
