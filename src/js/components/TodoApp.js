@@ -1,5 +1,5 @@
 import React from 'react';
-import TodoStore from '../stores/TodoStore';
+import todoStore from '../stores/todoStore';
 import todoActions from '../actions/todoActions';
 import Header from './Header';
 import MainSection from './MainSection';
@@ -7,8 +7,8 @@ import Footer from './Footer';
 
 function getTodoState() {
   return {
-    allTodos: TodoStore.getAll(),
-    areAllComplete: TodoStore.areAllComplete()
+    allTodos: todoStore.getAll(),
+    areAllComplete: todoStore.areAllComplete()
   }
 }
 
@@ -17,13 +17,13 @@ export default class TodoApp extends React.Component {
   state = getTodoState();
 
   componentDidMount() {
-    TodoStore.addChangeListener(this._onChange.bind(this));
+    todoStore.addChangeListener(this._onChange.bind(this));
 
     todoActions.fetchTodos();
   }
 
   componentWillUnmount() {
-    TodoStore.removeChangeListener(this._onChange.bind(this));
+    todoStore.removeChangeListener(this._onChange.bind(this));
   }
 
   render() {

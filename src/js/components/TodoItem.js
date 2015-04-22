@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'react/lib/cx';
-import TodoActions from '../actions/todoActions';
+import todoActions from '../actions/todoActions';
 import TodoTextInput from './TodoTextInput';
 
 const PT = React.PropTypes;
@@ -21,7 +21,7 @@ export default class TodoItem extends React.Component {
       input =
         <TodoTextInput
           className="edit"
-          onSave={this.handleSave}
+          onSave={this.handleSave.bind(this)}
           value={todo.text}
         />
     }
@@ -29,7 +29,8 @@ export default class TodoItem extends React.Component {
     return (
       <li
         className={this._getListClassName(todo)}
-        key={todo.id}>
+        key={todo.id}
+      >
         <div className="view">
           <input
             className="toggle"
@@ -40,7 +41,12 @@ export default class TodoItem extends React.Component {
           <label onDoubleClick={this.handleDoubleClick.bind(this)}>
             {todo.text}
           </label>
+          <button
+            className="destroy"
+            onClick={this.handleDestroyClick.bind(this)}
+          />
         </div>
+        {input}
       </li>
     );
   }
@@ -53,10 +59,19 @@ export default class TodoItem extends React.Component {
   }
 
   handleChangeCheckbox() {
-    TodoActions.toggleComplete(this.props.todo);
+    todoActions.toggleComplete(this.props.todo);
   }
 
   handleDoubleClick() {
     this.setState({ isEditing: true });
+  }
+
+  handleSave(text) {
+    todoActions.updateText(this.props.todo.id, text);
+    this.setState({ isEditing: false });
+  }
+
+  handleDestroyClick() {
+    todoActions.destroy(this.props.todo.id);
   }
 }

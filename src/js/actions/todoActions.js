@@ -3,19 +3,24 @@ import todoConstants from '../constants/todo';
 import todoApi from '../utils/todoApi';
 
 export default {
-
+  // user actions
   create: (text) => {
     TodoDispatcher.dispatch({
       actionType: todoConstants.CREATE,
       text: text
     });
 
-    todoApi.saveTodo(text);
+    todoApi.save(text);
   },
 
   updateText: (id, text) => {
     TodoDispatcher.dispatch({
       actionType: todoConstants.UPDATE_TEXT,
+      id: id,
+      text: text
+    });
+
+    todoApi.update({
       id: id,
       text: text
     });
@@ -31,12 +36,20 @@ export default {
       actionType: actionType,
       id: id
     });
+
+    todoApi.update({
+      id: todo.id,
+      text: todo.text,
+      complete: !todo.complete
+    });
   },
 
   toggleCompleteAll: () => {
     TodoDispatcher.dispatch({
       actionType: todoConstants.TOGGLE_COMPLETE_ALL
     });
+
+    todoApi.toggleComplete();
   },
 
   destroy: (id) => {
@@ -44,16 +57,21 @@ export default {
       actionType: todoConstants.DESTROY,
       id: id
     });
+
+    todoApi.destroy(id);
   },
 
   destroyCompleted: () => {
     TodoDispatcher.dispatch({
       actionType: todoConstants.DESTROY_COMPLETED
     });
+
+    todoApi.destroyCompleted();
   },
 
+  // api actions
   fetchTodos: () => {
-    todoApi.fetchTodos((todos) => {
+    todoApi.fetch((todos) => {
       TodoDispatcher.dispatch({
         actionType: todoConstants.FETCH_TODOS,
         todos: todos
