@@ -16,12 +16,12 @@ export default class Footer extends React.Component {
       return null;
     }
 
-    let completed = this._getCompletedNum();
-    let itemsLeft = total - completed;
+    let completedNum = this._getCompletedNum();
+    let itemsLeft = total - completedNum;
     let itemsLeftPhrase = itemsLeft === 1 ? ' item ' : ' items ';
     itemsLeftPhrase += 'left';
 
-    let clearCompleteButton = this._createClearCompleteButton(completed);
+    let clearCompleteButton = this._createClearCompleteButton(completedNum);
 
     return (
       <footer id="footer">
