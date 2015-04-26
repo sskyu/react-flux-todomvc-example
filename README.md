@@ -4,7 +4,8 @@
 ```
 $ npm install -g gulp
 $ npm install
-$ gulp // run tasks for build, watch and webserver
+$ npm run build
+$ npm run start
 ```
 
 ## References
