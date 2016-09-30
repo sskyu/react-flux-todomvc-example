@@ -1,8 +1,8 @@
-var gulp = require('gulp');
-var webserver = require('gulp-webserver');
-var config = require('../config');
+const gulp = require('gulp');
+const webserver = require('gulp-webserver');
+const config = require('../config');
 
-gulp.task('webserver', function () {
+gulp.task('webserver', () => {
   gulp.src(config.dest)
     .pipe(webserver(config.webserver));
 });

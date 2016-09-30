@@ -1,13 +1,13 @@
-var gulp = require('gulp');
-var gulpif = require('gulp-if');
-var plumber = require('gulp-plumber');
-var stylus = require('gulp-stylus');
-var concat = require('gulp-concat');
-var autoprefixer = require('gulp-autoprefixer');
-var minify = require('gulp-minify-css');
-var config = require('../config').stylus;
+const gulp = require('gulp');
+const gulpif = require('gulp-if');
+const plumber = require('gulp-plumber');
+const stylus = require('gulp-stylus');
+const concat = require('gulp-concat');
+const autoprefixer = require('gulp-autoprefixer');
+const minify = require('gulp-minify-css');
+const config = require('../config').stylus;
 
-gulp.task('stylus', function () {
+gulp.task('stylus', () => {
   gulp.src(config.src)
     .pipe(plumber())
     .pipe(stylus())
