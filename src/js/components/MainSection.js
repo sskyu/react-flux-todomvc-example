@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import TodoActions from '../actions/todoActions';
 import TodoItem from './TodoItem';
 
-const PT = React.PropTypes;
-
-export default class MainSection extends React.Component {
+export default class MainSection extends Component {
 
   static propTypes = {
-    allTodos: PT.object.isRequired,
-    areAllComplete: PT.bool.isRequired
+    allTodos: PropTypes.object.isRequired,
+    areAllComplete: PropTypes.bool.isRequired
   };
+
+  constructor(...args) {
+    super(...args);
+
+    this.handleChange = this.handleChange.bind(this);
+  }
 
   render() {
     if (!this._hasTodo()) {
@@ -23,7 +27,7 @@ export default class MainSection extends React.Component {
         <input
           id="toggle-all"
           type="checkbox"
-          onChange={this.handleChange.bind(this)}
+          onChange={this.handleChange}
           checked={this.props.areAllComplete ? 'checked' : ''}
         />
         <label htmlFor="toggle-all">Mark all as complete</label>

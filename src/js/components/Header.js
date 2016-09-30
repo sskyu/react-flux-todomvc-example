@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 import todoActions from '../actions/todoActions';
 import TodoTextInput from './TodoTextInput';
 
-export default class Header extends React.Component {
+export default class Header extends Component {
+
+  constructor(...args) {
+    super(...args);
+
+    this.handleSave = this.handleSave.bind(this);
+  }
 
   render() {
     return (

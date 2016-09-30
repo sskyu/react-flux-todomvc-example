@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import todoActions from '../actions/todoActions';
 
 const PT = React.PropTypes;
 
-export default class Footer extends React.Component {
+export default class Footer extends Component {
 
   static propTypes = {
-    allTodos: PT.object.isRequired
+    allTodos: PropTypes.object.isRequired
   };
+
+  constructor(...args) {
+    super(...args);
+
+    this.handleClick = this.handleClick.bind(this);
+  }
 
   render() {
     let total = this._getTotal();
