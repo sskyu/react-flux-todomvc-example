@@ -1,52 +1,31 @@
-var path = require('path');
+const path = require('path');
 
-var dest = './build';
-var src = './src';
-var relativeSrcPath = path.relative('.', src);
+const dest = './build';
+const src = './src';
+const relativeSrcPath = path.relative('.', src);
 
 module.exports = {
 
   dest: dest,
 
   js: {
-    src: src + '/js/**',
-    dest: dest + '/js',
+    src: `${src}/js/**`,
+    dest: `${dest}/js`,
     uglify: false
-  },
-
-  webpack: {
-    entry: src + '/js/app.js',
-    output: {
-      filename: 'bundle.js'
-    },
-    resolve: {
-      extensions: ['', '.js']
-    },
-    module: {
-      loaders: [
-        {
-          test: /\.js$/,
-          exclude: /node_modules/,
-          // loader: 'babel-loader?stage=0' // <- without es6 polyfills
-          loader: 'babel-loader?stage=0&optional=runtime'
-        }
-      ]
-    },
-    devtool: 'eval'
   },
 
   copy: {
     src: [
-      src + '/www/**'
+      `${src}/www/**`
     ],
     dest: dest
   },
 
   stylus: {
     src: [
-      src + '/styl/**/!(_)*'
+      `${src}/styl/**/!(_)*`
     ],
-    dest: dest + '/css/',
+    dest: `${dest}/css/`,
     output: 'app.css',
     autoprefixer: {
       browsers: ['last 2 versions']
@@ -55,9 +34,9 @@ module.exports = {
   },
 
   watch: {
-    js: relativeSrcPath + '/js/**',
-    styl: relativeSrcPath + '/styl/**',
-    www: relativeSrcPath + '/www/index.html'
+    js: `${relativeSrcPath}/js/**`,
+    styl: `${relativeSrcPath}/styl/**`,
+    www: `${relativeSrcPath}/www/index.html`
   },
 
   webserver: {

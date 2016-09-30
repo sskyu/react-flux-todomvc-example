@@ -1,20 +1,20 @@
-var gulp = require('gulp');
-var watch = require('gulp-watch');
-var config = require('../config').watch;
+const gulp = require('gulp');
+const watch = require('gulp-watch');
+const config = require('../config').watch;
 
-gulp.task('watch', function () {
+gulp.task('watch', () => {
   // js
-  watch(config.js, function () {
+  watch(config.js, () => {
     gulp.start(['webpack']);
   });
 
   // styl
-  watch(config.styl, function () {
+  watch(config.styl, () => {
     gulp.start(['stylus']);
   });
 
   // www
-  watch(config.www, function () {
+  watch(config.www, () => {
     gulp.start(['copy']);
   });
 });
