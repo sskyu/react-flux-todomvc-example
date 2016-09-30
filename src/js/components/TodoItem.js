@@ -1,17 +1,24 @@
-import React from 'react';
-import cx from 'react/lib/cx';
+import React, { Component, PropTypes } from 'react';
+import classNames from 'classnames';
 import todoActions from '../actions/todoActions';
 import TodoTextInput from './TodoTextInput';
 
-const PT = React.PropTypes;
-
-export default class TodoItem extends React.Component {
+export default class TodoItem extends Component {
 
   static propTypes = {
-    todo: PT.object.isRequired
+    todo: PropTypes.object.isRequired
   };
 
   state = { isEditing: false };
+
+  constructor(...args) {
+    super(...args);
+
+    this.handleSave = this.handleSave.bind(this);
+    this.handleChangeCheckbox = this.handleChangeCheckbox.bind(this);
+    this.handleDoubleClick = this.handleDoubleClick.bind(this);
+    this.handleDestroyClick = this.handleDestroyClick.bind(this);
+  }
 
   render() {
     let todo = this.props.todo;
@@ -21,7 +28,7 @@ export default class TodoItem extends React.Component {
       input =
         <TodoTextInput
           className="edit"
-          onSave={this.handleSave.bind(this)}
+          onSave={this.handleSave}
           value={todo.text}
         />
     }
@@ -36,14 +43,14 @@ export default class TodoItem extends React.Component {
             className="toggle"
             type="checkbox"
             checked={todo.complete}
-            onChange={this.handleChangeCheckbox.bind(this)}
+            onChange={this.handleChangeCheckbox}
           />
-          <label onDoubleClick={this.handleDoubleClick.bind(this)}>
+          <label onDoubleClick={this.handleDoubleClick}>
             {todo.text}
           </label>
           <button
             className="destroy"
-            onClick={this.handleDestroyClick.bind(this)}
+            onClick={this.handleDestroyClick}
           />
         </div>
         {input}
@@ -52,7 +59,7 @@ export default class TodoItem extends React.Component {
   }
 
   _getListClassName(todo) {
-    return cx({
+    return classNames({
       'completed': todo.complete,
       'editing': this.state.isEditing
     });

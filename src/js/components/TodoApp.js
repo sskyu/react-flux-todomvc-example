@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import todoStore from '../stores/todoStore';
 import todoActions from '../actions/todoActions';
 import Header from './Header';

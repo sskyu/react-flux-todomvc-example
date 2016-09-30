@@ -1,22 +1,28 @@
-import React from 'react';
-
-const PT = React.PropTypes;
+import React, { Component, PropTypes } from 'react';
 
 const ENTER_KEY_CODE = 13;
 
-export default class TodoTextInput extends React.Component {
+export default class TodoTextInput extends Component {
 
   static propTypes = {
-    className   : PT.string,
-    id          : PT.string,
-    placeholder : PT.string,
-    onSave      : PT.func.isRequied,
-    value       : PT.string
+    className   : PropTypes.string,
+    id          : PropTypes.string,
+    placeholder : PropTypes.string,
+    onSave      : PropTypes.func.isRequired,
+    value       : PropTypes.string
   }
 
   static defaultProps = { value: '' };
 
   state = { value: this.props.value };
+
+  constructor(...args) {
+    super(...args);
+
+    this.handleBlur = this.handleBlur.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+  }
 
   render() {
     return (
@@ -24,9 +30,9 @@ export default class TodoTextInput extends React.Component {
         className={this.props.className}
         id={this.props.id}
         placeholder={this.props.placeholder}
-        onBlur={this.handleBlur.bind(this)}
-        onChange={this.handleChange.bind(this)}
-        onKeyDown={this.handleKeyDown.bind(this)}
+        onBlur={this.handleBlur}
+        onChange={this.handleChange}
+        onKeyDown={this.handleKeyDown}
         value={this.state.value}
         autoFocus={true}
       />

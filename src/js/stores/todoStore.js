@@ -1,5 +1,4 @@
 import { EventEmitter } from 'events';
-import assign from 'object-assign';
 import TodoDispatcher from '../dispatcher/TodoDispatcher';
 import todoConstants from '../constants/todo';
 
@@ -17,7 +16,7 @@ function create(text) {
 }
 
 function update(id, updates) {
-  _todos[id] = assign({}, _todos[id], updates);
+  _todos[id] = Object.assign({}, _todos[id], updates);
 }
 
 function updateAll(updates) {

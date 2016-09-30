@@ -1,4 +1,3 @@
-import assign from 'object-assign';
 import todoConstants from '../constants/todo';
 import todoActions from '../actions/todoActions';
 
@@ -69,7 +68,7 @@ function _updateTodo(todo) {
 
     _fetchTodos()
       .then((todos) => {
-        todos[todo.id] = assign({}, todos[todo.id], {
+        todos[todo.id] = Object.assign({}, todos[todo.id], {
           id: todo.id,
           text: todo.text,
           complete: todo.complete ? true : false
@@ -97,7 +96,7 @@ function _toggleCompleteTodos() {
         }
 
         for (let id in todos) {
-          todos[id] = assign({}, todos[id], {
+          todos[id] = Object.assign({}, todos[id], {
             complete: isAllComplete ? false : true
           });
         }
@@ -184,7 +183,7 @@ export default {
     _fetchTodos()
       .then((rawTodos) => {
         for (let id in rawTodos) {
-          rawTodos[id] = assign({}, params, rawTodos[id]);
+          rawTodos[id] = Object.assign({}, params, rawTodos[id]);
         }
         _saveTodos(rawTodos)
           .then((todos) => {

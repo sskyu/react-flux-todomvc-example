@@ -2,9 +2,7 @@
 
 ## Getting Started
 ```
-$ npm install -g gulp
 $ npm install
-$ npm run build
 $ npm run start
 ```
 
