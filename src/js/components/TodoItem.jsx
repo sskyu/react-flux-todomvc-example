@@ -6,10 +6,8 @@ import TodoTextInput from './TodoTextInput';
 export default class TodoItem extends Component {
 
   static propTypes = {
-    todo: PropTypes.object.isRequired
+    todo: PropTypes.object.isRequired,
   };
-
-  state = { isEditing: false };
 
   constructor(...args) {
     super(...args);
@@ -20,8 +18,34 @@ export default class TodoItem extends Component {
     this.handleDestroyClick = this.handleDestroyClick.bind(this);
   }
 
+  state = { isEditing: false };
+
+  handleChangeCheckbox() {
+    todoActions.toggleComplete(this.props.todo);
+  }
+
+  handleDoubleClick() {
+    this.setState({ isEditing: true });
+  }
+
+  handleSave(text) {
+    todoActions.updateText(this.props.todo.id, text);
+    this.setState({ isEditing: false });
+  }
+
+  handleDestroyClick() {
+    todoActions.destroy(this.props.todo.id);
+  }
+
+  getListClassName(todo) {
+    return classNames({
+      completed: todo.complete,
+      editing: this.state.isEditing,
+    });
+  }
+
   render() {
-    let todo = this.props.todo;
+    const todo = this.props.todo;
     let input;
 
     if (this.state.isEditing) {
@@ -35,7 +59,7 @@ export default class TodoItem extends Component {
 
     return (
       <li
-        className={this._getListClassName(todo)}
+        className={this.getListClassName(todo)}
         key={todo.id}
       >
         <div className="view">
@@ -56,29 +80,5 @@ export default class TodoItem extends Component {
         {input}
       </li>
     );
-  }
-
-  _getListClassName(todo) {
-    return classNames({
-      'completed': todo.complete,
-      'editing': this.state.isEditing
-    });
-  }
-
-  handleChangeCheckbox() {
-    todoActions.toggleComplete(this.props.todo);
-  }
-
-  handleDoubleClick() {
-    this.setState({ isEditing: true });
-  }
-
-  handleSave(text) {
-    todoActions.updateText(this.props.todo.id, text);
-    this.setState({ isEditing: false });
-  }
-
-  handleDestroyClick() {
-    todoActions.destroy(this.props.todo.id);
   }
 }

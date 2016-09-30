@@ -1,13 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import todoActions from '../actions/todoActions';
 
-const PT = React.PropTypes;
-
 export default class Footer extends Component {
 
   static propTypes = {
     allTodos: PropTypes.object.isRequired
-  };
+  }
 
   constructor(...args) {
     super(...args);

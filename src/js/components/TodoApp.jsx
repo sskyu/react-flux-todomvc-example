@@ -8,8 +8,8 @@ import Footer from './Footer';
 function getTodoState() {
   return {
     allTodos: todoStore.getAll(),
-    areAllComplete: todoStore.areAllComplete()
-  }
+    areAllComplete: todoStore.areAllComplete(),
+  };
 }
 
 export default class TodoApp extends React.Component {

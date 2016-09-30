@@ -5,11 +5,11 @@ const ENTER_KEY_CODE = 13;
 export default class TodoTextInput extends Component {
 
   static propTypes = {
-    className   : PropTypes.string,
-    id          : PropTypes.string,
-    placeholder : PropTypes.string,
-    onSave      : PropTypes.func.isRequired,
-    value       : PropTypes.string
+    className: PropTypes.string,
+    id: PropTypes.string,
+    placeholder: PropTypes.string,
+    onSave: PropTypes.func.isRequired,
+    value: PropTypes.string,
   }
 
   static defaultProps = { value: '' };
@@ -24,6 +24,29 @@ export default class TodoTextInput extends Component {
     this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
+  save() {
+    this.props.onSave(this.state.value);
+    this.setState({
+      value: '',
+    });
+  }
+
+  handleBlur() {
+    this.save();
+  }
+
+  handleChange(e) {
+    this.setState({
+      value: e.target.value,
+    });
+  }
+
+  handleKeyDown(e) {
+    if (e.keyCode === ENTER_KEY_CODE) {
+      this.save();
+    }
+  }
+
   render() {
     return (
       <input
@@ -34,32 +57,8 @@ export default class TodoTextInput extends Component {
         onChange={this.handleChange}
         onKeyDown={this.handleKeyDown}
         value={this.state.value}
-        autoFocus={true}
+        autoFocus
       />
     );
   }
-
-  _save() {
-    this.props.onSave(this.state.value);
-    this.setState({
-      value: ''
-    });
-  }
-
-  handleBlur() {
-    this._save();
-  }
-
-  handleChange(e) {
-    this.setState({
-      value: e.target.value
-    });
-  }
-
-  handleKeyDown(e) {
-    if (e.keyCode === ENTER_KEY_CODE) {
-      this._save();
-    }
-  }
-
 }
